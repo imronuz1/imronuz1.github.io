@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Luminary App - Scroll Enhanced</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ТЕМЫ ОФОРМЛЕНИЯ */
+        :root { --bg: #F2E8DA; --card: #E6D5BC; --text: #3A2A23; --accent: #DCC4A3; --nav: #E6D5BC; }
+        body.theme-midnight { --bg: #020617; --card: #0f172a; --text: #f8fafc; --accent: #1e293b; --nav: #0f172a; }
+        body.theme-black { --bg: #000000; --card: #111111; --text: #ffffff; --accent: #222222; --nav: #111111; }
+        body.theme-lavender { --bg: #1a1625; --card: #2d263d; --text: #eee9f5; --accent: #4a3f5f; --nav: #2d263d; }
+        body.theme-soft-dark { --bg: #1e293b; --card: #334155; --text: #f1f5f9; --accent: #475569; --nav: #334155; }
+
+        body { margin: 0; font-family: 'Nunito', sans-serif; background-color: var(--bg); color: var(--text); min-height: 100vh; transition: 0.4s; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; box-sizing: border-box; }
+
+        /* HEADER */
+        header { display: flex; gap: 12px; margin-bottom: 25px; align-items: center; }
+        .search-container { flex-grow: 1; background: var(--card); border-radius: 18px; height: 54px; display: flex; align-items: center; padding: 0 15px; }
+        .search-container input { background: none; border: none; width: 100%; outline: none; font-size: 16px; color: var(--text); font-family: inherit; }
+        .menu-btn { background: var(--card); border: none; border-radius: 15px; width: 54px; height: 54px; font-size: 24px; cursor: pointer; color: var(--text); display: flex; align-items: center; justify-content: center; }
+
+        /* HERO SLIDER */
+        .hero-slider { width: 100%; height: 380px; border-radius: 30px; background-size: cover; background-position: center; display: flex; flex-direction: column; justify-content: flex-end; padding: 30px; box-sizing: border-box; color: white; margin-bottom: 30px; position: relative; overflow: hidden; }
+        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); }
+        .hero-content { position: relative; z-index: 2; }
+        .btn-read { background: #fff; color: #000; border: none; padding: 12px 25px; border-radius: 12px; font-weight: 700; cursor: pointer; margin-top: 10px; }
+
+        /* GRID */
+        .section-label { font-size: 22px; font-weight: 700; margin-bottom: 20px; }
+        .book-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(145px, 1fr)); gap: 15px; }
+        .book-card { height: 230px; border-radius: 22px; background-size: cover; background-position: center; cursor: pointer; }
+
+        /* FOOTER SOCIALS */
+        .bottom-join { margin-top: 40px; padding-bottom: 120px; display: flex; flex-direction: column; align-items: center; gap: 15px; }
+        .footer-logo { font-size: 14px; font-weight: 700; letter-spacing: 3px; opacity: 0.5; text-transform: uppercase; }
+        .social-icons { display: flex; gap: 20px; }
+        .social-btn { width: 44px; height: 44px; background: var(--card); border-radius: 12px; display: flex; align-items: center; justify-content: center; transition: 0.3s; text-decoration: none; }
+        .social-btn img { width: 20px; height: 20px; opacity: 0.7; }
+        body.theme-black .social-btn img, body.theme-midnight .social-btn img, body.theme-soft-dark .social-btn img { filter: invert(1); }
+
+        /* PROFILE */
+        .profile-header { text-align: center; margin: 20px 0 30px; }
+        .avatar { width: 100px; height: 100px; background: #FFD24D; border-radius: 50%; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; font-size: 55px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+        .scroll-spacer { height: 150px; width: 100%; } /* Увеличивает прокрутку */
+
+        /* NAVIGATION */
+        .nav-bar { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 92%; max-width: 400px; background: var(--nav); height: 75px; border-radius: 35px; display: flex; justify-content: space-around; align-items: center; box-shadow: 0 10px 30px rgba(0,0,0,0.2); z-index: 1000; }
+        .nav-link { font-size: 28px; cursor: pointer; opacity: 0.4; transition: 0.3s; }
+        .nav-link.active { opacity: 1; transform: translateY(-5px); }
+
+        /* VIEWS */
+        .view { display: none; min-height: 100vh; flex-direction: column; }
+        .view.active { display: flex; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .list-item { width: 100%; background: var(--card); border: none; padding: 22px; border-radius: 20px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-family: inherit; font-size: 18px; font-weight: 600; color: var(--text); margin-bottom: 12px; }
+        .back-btn { font-size: 24px; cursor: pointer; background: var(--card); border: none; border-radius: 15px; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; color: var(--text); }
+
+        .theme-opt { padding: 20px; border-radius: 20px; cursor: pointer; font-weight: 700; display: flex; align-items: center; gap: 15px; background: var(--card); color: var(--text); margin-bottom: 10px; }
+        .dot { width: 20px; height: 20px; border-radius: 50%; border: 2px solid #fff; }
+    </style>
+</head>
+<body class="theme-soft-dark">
+
+<div class="container">
+    <header id="main-header">
+        <div class="search-container">
+            <input type="text" id="main-search" placeholder="Найти книгу..." oninput="liveSearch()">
+        </div>
+        <button class="menu-btn" onclick="switchTab('prof-view', 'ni-u')">🙋‍♂️</button>
+    </header>
+
+    <div id="home-view" class="view active">
+        <div id="hero" class="hero-slider">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <h2 id="hero-name">Загрузка...</h2>
+                <p id="hero-author" style="opacity: 0.8; margin: 5px 0 15px;"></p>
+                <button id="hero-btn" class="btn-read">Читать</button>
+            </div>
+        </div>
+        <div class="section-label">Популярные книги</div>
+        <div id="book-grid" class="book-grid"></div>
+
+        <div class="bottom-join">
+            <div class="footer-logo">LUMINARY</div>
+            <div class="social-icons">
+                <a href="https://tiktok.com" class="social-btn"><img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" alt="TT"></a>
+                <a href="https://youtube.com" class="social-btn"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YT"></a>
+                <a href="https://instagram.com" class="social-btn"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="IG"></a>
+                <a href="https://linkedin.com" class="social-btn"><img src="https://cdn-icons-png.flaticon.com/512/145/145807.png" alt="IN"></a>
+            </div>
+        </div>
+    </div>
+
+    <div id="lib-view" class="view">
+        <div class="section-label">Библиотека</div>
+        <button class="list-item" onclick="openPage('IELTS Materials', 'Сборники тестов 2026.')">IELTS Prep <span>→</span></button>
+        <button class="list-item" onclick="openPage('SAT Practice', 'Математика и чтение SAT.')">SAT Practice <span>→</span></button>
+        <button class="list-item" onclick="openPage('TOEFL Tests', 'Аудио и вокабуляр для TOEFL.')">TOEFL Tests <span>→</span></button>
+        <div class="scroll-spacer"></div>
+    </div>
+
+    <div id="prof-view" class="view">
+        <div class="profile-header">
+            <div class="avatar">🙋‍♂️</div>
+            <h2 style="margin:0">Тест</h2>
+            <p style="opacity:0.6; margin:5px 0 0;">Веселый аккаунт</p>
+        </div>
+        <button class="list-item" onclick="showSub('settings-view')">Настройки ⚙️ <span>❯</span></button>
+        <button class="list-item" onclick="openPage('Wishlist', 'Ваш Wishlist пуст.')">Wishlist ❤️ <span>❯</span></button>
+        <button class="list-item" onclick="openPage('Заметки', 'Ваши заметки появятся здесь.')">Заметки 📝 <span>❯</span></button>
+        <button class="list-item" onclick="openPage('История', 'Вы еще ничего не читали.')">История чтений 📖 <span>❯</span></button>
+        <button class="list-item" onclick="openPage('Достижения', 'Тут будут ваши награды.')">Достижения 🏆 <span>❯</span></button>
+        <button class="list-item" style="margin-top:20px; border: 1px solid var(--accent); background: transparent;" onclick="location.reload()">Выйти</button>
+
+        <div class="scroll-spacer"></div>
+    </div>
+
+    <div id="settings-view" class="view">
+        <button class="back-btn" onclick="goBack()">←</button>
+        <div class="section-label">Темы</div>
+        <div class="theme-opt" onclick="setTheme('soft-dark')"><div class="dot" style="background:#1e293b"></div> Soft Dark</div>
+        <div class="theme-opt" onclick="setTheme('midnight')"><div class="dot" style="background:#020617"></div> Midnight</div>
+        <div class="theme-opt" onclick="setTheme('black')"><div class="dot" style="background:#000"></div> Deep Black</div>
+        <div class="theme-opt" onclick="setTheme('lavender')"><div class="dot" style="background:#4a3f5f"></div> Lavender</div>
+        <div class="theme-opt" onclick="setTheme('')"><div class="dot" style="background:#F2E8DA"></div> Classic</div>
+        <div class="scroll-spacer"></div>
+    </div>
+
+    <div id="generic-view" class="view">
+        <button class="back-btn" onclick="goBack()">←</button>
+        <h1 id="page-title"></h1>
+        <div style="background:var(--card); padding:30px; border-radius:25px;">
+            <p id="page-content"></p>
+        </div>
+        <div class="scroll-spacer"></div>
+    </div>
+
+    <div id="book-details" class="view">
+        <button class="back-btn" onclick="goBack()">←</button>
+        <div style="text-align: center;">
+            <img id="detail-img" src="" style="width: 220px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+            <h1 id="detail-title" style="margin-top:25px;"></h1>
+            <p id="detail-author" style="opacity:0.6;"></p>
+            <div style="text-align:left; background:var(--card); padding:25px; border-radius:25px; margin-top:20px;">
+                <p id="detail-desc"></p>
+                <button class="btn-read" style="width:100%; background:var(--text); color:var(--bg); padding:18px;">Начать чтение</button>
+            </div>
+        </div>
+        <div class="scroll-spacer"></div>
+    </div>
+
+    <nav class="nav-bar" id="main-nav">
+        <span id="ni-h" class="nav-link active" onclick="switchTab('home-view', 'ni-h')">🏠</span>
+        <span id="ni-l" class="nav-link" onclick="switchTab('lib-view', 'ni-l')">📚</span>
+        <span id="ni-u" class="nav-link" onclick="switchTab('prof-view', 'ni-u')">🙋‍♂️</span>
+    </nav>
+</div>
+
+<script>
+    const library = [
+        { id: 'steve', title: "Steve Jobs", author: "Walter Isaacson", img: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1511288482i/11084145.jpg", desc: "Биография гения." },
+        { id: 'elon', title: "Elon Musk", author: "Ashlee Vance", img: "https://www.troykaonline.com/files/product/large/RU2042240_982040.jpg", desc: "Будущее человечества." },
+        { id: 'atomic', title: "Atomic Habits", author: "James Clear", img: "https://m.media-amazon.com/images/I/81kg51XRc1L._SL400_.jpg", desc: "Сила привычек." }
+    ];
+
+    let lastView = 'home-view';
+    let lastNav = 'ni-h';
+
+    function renderGrid(books) {
+        const grid = document.getElementById('book-grid');
+        grid.innerHTML = '';
+        books.forEach(book => {
+            const card = document.createElement('div');
+            card.className = 'book-card';
+            card.style.backgroundImage = `url('${book.img}')`;
+            card.onclick = () => openBook(book.id);
+            grid.appendChild(card);
+        });
+    }
+
+    function liveSearch() {
+        const query = document.getElementById('main-search').value.toLowerCase();
+        renderGrid(library.filter(b => b.title.toLowerCase().includes(query)));
+    }
+
+    function switchTab(viewId, navId) {
+        lastView = viewId; lastNav = navId;
+        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+        document.getElementById(viewId).classList.add('active');
+        document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
+        document.getElementById(navId).classList.add('active');
+        document.getElementById('main-header').style.display = 'flex';
+        document.getElementById('main-nav').style.display = 'flex';
+        window.scrollTo(0, 0);
+    }
+
+    function showSub(viewId) {
+        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+        document.getElementById(viewId).classList.add('active');
+        document.getElementById('main-header').style.display = 'none';
+        document.getElementById('main-nav').style.display = 'none';
+        window.scrollTo(0, 0);
+    }
+
+    function openPage(title, content) {
+        document.getElementById('page-title').innerText = title;
+        document.getElementById('page-content').innerText = content;
+        showSub('generic-view');
+    }
+
+    function openBook(id) {
+        const book = library.find(b => b.id === id);
+        document.getElementById('detail-img').src = book.img;
+        document.getElementById('detail-title').innerText = book.title;
+        document.getElementById('detail-author').innerText = book.author;
+        document.getElementById('detail-desc').innerText = book.desc;
+        showSub('book-details');
+    }
+
+    function setTheme(name) { document.body.className = name ? 'theme-' + name : ''; }
+    function goBack() { switchTab(lastView, lastNav); }
+
+    let slideIdx = 0;
+    function slider() {
+        const book = library[slideIdx % library.length];
+        const h = document.getElementById('hero');
+        if(h && document.getElementById('home-view').classList.contains('active')) {
+            h.style.backgroundImage = `url('${book.img}')`;
+            document.getElementById('hero-name').innerText = book.title;
+            document.getElementById('hero-author').innerText = book.author;
+            document.getElementById('hero-btn').onclick = () => openBook(book.id);
+        }
+        slideIdx++;
+    }
+
+    renderGrid(library);
+    setInterval(slider, 5000);
+    slider();
+</script>
+
+</body>
+</html>

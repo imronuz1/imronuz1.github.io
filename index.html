@@ -3,305 +3,354 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Luminary - Final Custom Edition</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>Luminary - Final Polish</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* ПЕРЕМЕННЫЕ ЦВЕТОВ (управляются пользователем) */
         :root {
-            --bg: #1e293b;
-            --text: #f1f5f9;
-            --nav: #334155;
-            --accent: #475569;
+            --bg-page: #D6CDBA;
+            --bg-card: #FFFFFF;
+            --text-main: #4A4238;
+            --container-width: 1200px;
         }
 
         body {
-            margin: 0;
-            font-family: 'Nunito', sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
-            transition: background 0.3s, color 0.3s;
-            overflow-x: hidden;
+            margin: 0; font-family: 'Nunito', sans-serif;
+            background-color: var(--bg-page); color: var(--text-main);
+            min-height: 100vh; transition: background 0.4s ease;
+            -webkit-tap-highlight-color: transparent;
+            display: flex; flex-direction: column; align-items: center;
         }
 
-        .container { max-width: 600px; margin: 0 auto; padding: 20px; box-sizing: border-box; }
+        .container {
+            width: 94%;
+            max-width: var(--container-width);
+            padding: 20px 0;
+            box-sizing: border-box;
+            position: relative;
+        }
 
         /* HEADER */
-        header { display: flex; gap: 12px; margin-bottom: 25px; align-items: center; }
-        .search-container {
-            flex-grow: 1;
-            background: var(--nav);
-            border-radius: 18px;
-            height: 54px;
-            display: flex;
-            align-items: center;
-            padding: 0 15px;
+        header {
+            display: flex; gap: 15px; margin-bottom: 30px; align-items: center; min-height: 58px;
+            max-width: 800px; margin-left: auto; margin-right: auto;
         }
-        .search-container input { background: none; border: none; width: 100%; outline: none; font-size: 16px; color: var(--text); font-family: inherit; }
-        .menu-btn { background: var(--nav); border: none; border-radius: 15px; width: 54px; height: 54px; font-size: 24px; cursor: pointer; color: var(--text); display: flex; align-items: center; justify-content: center; }
+
+        /* SEARCH BAR */
+        .search-bar {
+            flex-grow: 1; background: var(--bg-card); border-radius: 18px;
+            height: 58px; display: flex; align-items: center; padding: 0 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        }
+        .search-bar input { background: none; border: none; width: 100%; outline: none; font-size: 16px; color: #333; font-family: inherit; font-weight: 600; }
+
+        /* PROFILE TOP BTN */
+        .profile-top-btn {
+            background: var(--bg-card); border: none; border-radius: 18px; width: 58px; height: 58px;
+            display: flex; align-items: center; justify-content: center; cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03); transition: 0.2s;
+            margin-left: auto;
+        }
+        .profile-top-btn:hover { transform: scale(1.05); }
 
         /* HERO SLIDER */
-        .hero-slider { width: 100%; height: 350px; border-radius: 30px; background-size: cover; background-position: center; display: flex; flex-direction: column; justify-content: flex-end; padding: 30px; box-sizing: border-box; color: white; margin-bottom: 30px; position: relative; overflow: hidden; }
-        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); }
-        .hero-content { position: relative; z-index: 2; }
-        .btn-read { background: #fff; color: #000; border: none; padding: 12px 25px; border-radius: 12px; font-weight: 700; cursor: pointer; margin-top: 10px; }
+        .hero {
+            width: 100%; height: 380px; border-radius: 32px;
+            background-size: cover; background-position: center;
+            display: flex; flex-direction: column; justify-content: flex-end;
+            padding: 35px; box-sizing: border-box; color: white;
+            margin-bottom: 40px; position: relative; overflow: hidden; cursor: pointer;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.12); transition: 0.4s ease;
+        }
+        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(0,0,0,0.85), transparent); }
+        .hero-text { position: relative; z-index: 2; }
+        .hero-text h2 { margin: 0; font-size: 32px; font-weight: 800; }
+        .hero-text p { font-size: 18px; }
 
-        /* GRID */
-        .section-label { font-size: 22px; font-weight: 700; margin-bottom: 20px; }
-        .book-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; }
-        .book-card { height: 210px; border-radius: 20px; background-size: cover; background-position: center; cursor: pointer; transition: 0.2s; }
+        .searching .hero, .searching #home-label { display: none; }
 
-        /* PROFILE */
-        .profile-header { text-align: center; margin: 10px 0 30px; }
-        .avatar { width: 100px; height: 100px; background: #FFD24D; border-radius: 50%; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; font-size: 55px; border: 4px solid var(--nav); }
+        /* LABELS */
+        .label { font-size: 24px; font-weight: 800; margin: 30px 0 20px 5px; opacity: 0.9; }
 
-        /* CUSTOMIZER */
-        .customizer-box { background: var(--nav); padding: 20px; border-radius: 25px; margin-bottom: 25px; display: flex; flex-direction: column; gap: 15px; }
-        .color-row { display: flex; justify-content: space-between; align-items: center; }
-        .color-row input { border: none; width: 40px; height: 40px; border-radius: 10px; cursor: pointer; background: none; }
+        /* BLOCKS */
+        .grid-blocks {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+        }
+        .block-item {
+            width: 100%; background: var(--bg-card); border-radius: 24px; padding: 25px 30px;
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: 18px; font-weight: 700; color: #444;
+            border: none; cursor: pointer; box-sizing: border-box;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03); transition: 0.2s;
+        }
+        .block-item:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0,0,0,0.06); }
 
-        /* LIST ITEMS */
-        .list-item { width: 100%; background: var(--nav); border: none; padding: 22px; border-radius: 20px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-family: inherit; font-size: 18px; font-weight: 600; color: var(--text); margin-bottom: 12px; text-align: left; }
-        .back-btn { font-size: 24px; cursor: pointer; background: var(--nav); border: none; border-radius: 15px; width: 50px; height: 50px; margin-bottom: 20px; color: var(--text); }
+        /* THEME GRID */
+        .theme-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(60px, 1fr)); gap: 15px; margin: 20px 0; max-width: 400px; }
+        .theme-dot { width: 100%; aspect-ratio: 1; border-radius: 50%; cursor: pointer; border: 3px solid #f0f0f0; box-sizing: border-box; transition: 0.2s; }
+        .theme-dot:hover { transform: scale(1.05); }
+        .theme-dot.active { border-color: var(--text-main); transform: scale(1.1); }
+        .theme-custom { background: conic-gradient(red, yellow, lime, aqua, blue, magenta, red); }
 
-        /* FOOTER SOCIALS */
-        .bottom-join { margin-top: 40px; padding-bottom: 40px; display: flex; flex-direction: column; align-items: center; gap: 15px; }
-        .social-icons { display: flex; gap: 15px; }
-        .social-btn { width: 50px; height: 50px; background: var(--nav); border-radius: 14px; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 22px; transition: 0.3s; }
-        .social-btn:active { transform: scale(0.9); }
+        /* BOOK GRID */
+        .book-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 25px;
+        }
+        .book-card {
+            aspect-ratio: 2/3; border-radius: 24px; background-size: cover; background-position: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08); cursor: pointer; transition: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .book-card:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 15px 35px rgba(0,0,0,0.12); }
+        .book-card.hidden { display: none; }
 
-        /* NAVIGATION BAR */
-        .nav-bar { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 400px; background: var(--nav); height: 75px; border-radius: 35px; display: flex; justify-content: space-around; align-items: center; box-shadow: 0 10px 30px rgba(0,0,0,0.3); z-index: 1000; }
-        .nav-link { font-size: 28px; cursor: pointer; opacity: 0.4; transition: 0.3s; }
-        .nav-link.active { opacity: 1; transform: translateY(-5px); }
+        /* SOCIAL MEDIA BLOCK */
+        .social-footer { margin-top: 80px; text-align: center; padding-bottom: 20px; }
+        .social-footer p { font-weight: 800; opacity: 0.5; font-size: 14px; margin-bottom: 20px; letter-spacing: 1px; }
+        .social-links { display: flex; justify-content: center; gap: 25px; }
+        .social-icon {
+            background: var(--bg-card); width: 55px; height: 55px; border-radius: 18px;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05); text-decoration: none; transition: 0.2s;
+        }
+        .social-icon:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+        .social-icon svg { width: 26px; height: 26px; fill: var(--text-main); }
 
-        /* VIEWS */
-        .view { display: none; min-height: 100vh; flex-direction: column; }
-        .view.active { display: flex; animation: fadeIn 0.3s ease; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .scroll-spacer { height: 140px; width: 100%; }
+        /* NAVIGATION */
+        .nav-container {
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+            width: 90%; max-width: 450px; background: var(--bg-card); height: 75px;
+            border-radius: 30px; display: flex; justify-content: space-around;
+            align-items: center; box-shadow: 0 15px 40px rgba(0,0,0,0.12); z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+        .nav-btn { background: none; border: none; cursor: pointer; opacity: 0.3; transition: 0.3s; padding: 12px; }
+        .nav-btn.active { opacity: 1; transform: scale(1.1); }
+        .nav-btn svg { width: 28px; height: 28px; fill: var(--text-main); }
+
+        /* VIEWS & CONTENT */
+        .view { display: none; animation: fadeIn 0.4s ease; width: 100%; }
+        .view.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .sub-page-card {
+            background: var(--bg-card); border-radius: 36px; padding: 40px;
+            min-height: 500px; max-width: 900px; margin: 0 auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+        }
+        .back-btn { background: none; border: none; font-weight: 800; color: inherit; margin-bottom: 25px; cursor: pointer; font-size: 17px; display: flex; align-items: center; gap: 10px; transition: 0.2s; }
+        .back-btn:hover { opacity: 0.7; }
+
+        .spacer { height: 180px; }
+
+        @media (max-width: 600px) {
+            :root { --container-width: 100%; }
+            .container { width: 92%; }
+            .hero { height: 320px; }
+            .book-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
+            .grid-blocks { grid-template-columns: 1fr; }
+            .sub-page-card { padding: 25px; }
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
     <header id="main-header">
-        <div class="search-container">
-            <input type="text" id="main-search" placeholder="Поиск в Luminary..." oninput="liveSearch()">
+        <div id="search-wrapper" class="search-bar">
+            <input type="text" id="main-search" placeholder="Поиск" onkeydown="if(event.key==='Enter') handleSearch(this.value)">
         </div>
-        <button class="menu-btn" onclick="switchTab('prof-view', 'ni-u')">🙋‍♂️</button>
+        <button id="top-profile-btn" class="profile-top-btn" onclick="switchTab('prof-view', 'ni-u')">
+            <svg viewBox="0 0 24 24" width="24" height="24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+        </button>
     </header>
 
     <div id="home-view" class="view active">
-        <div id="hero" class="hero-slider">
+        <div id="hero" class="hero" onclick="openHeroBook()">
             <div class="hero-overlay"></div>
-            <div class="hero-content">
-                <h2 id="hero-name">Загрузка...</h2>
-                <p id="hero-author" style="opacity: 0.8; margin: 5px 0 15px;"></p>
-                <button id="hero-btn" class="btn-read">Читать</button>
+            <div class="hero-text">
+                <h2 id="hero-title">Steve Jobs</h2>
+                <p id="hero-sub" style="opacity: 0.8; margin-top: 5px;">Walter Isaacson</p>
             </div>
         </div>
-        <div class="section-label">Тренды недели</div>
+        <div id="home-label" class="label">Твоя библиотека</div>
         <div id="book-grid" class="book-grid"></div>
 
-        <div class="bottom-join">
-            <div style="font-weight: 700; opacity: 0.3; letter-spacing: 3px;">LUMINARY</div>
-            <div class="social-icons">
-                <a href="https://tiktok.com" class="social-btn">📱</a>
-                <a href="https://youtube.com" class="social-btn">🎬</a>
-                <a href="https://instagram.com" class="social-btn">📸</a>
-                <a href="https://linkedin.com" class="social-btn">💼</a>
+        <div class="social-footer">
+            <p>СЛЕДИТЕ ЗА НАМИ</p>
+            <div class="social-links">
+                <a href="#" class="social-icon"><svg viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8A3.6 3.6 0 0 0 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6A3.6 3.6 0 0 0 16.4 4H7.6m9.65 1.5a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5M12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10m0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/></svg></a>
+                <a href="#" class="social-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.12.02-1.96 1.25-5.54 3.69-.52.35-1 .53-1.42.52-.47-.01-1.37-.26-2.03-.48-.82-.27-1.47-.42-1.42-.88.03-.24.35-.49.96-.75 3.78-1.65 6.31-2.74 7.58-3.27 3.61-1.51 4.35-1.77 4.84-1.78.11 0 .35.03.5.16.13.1.16.24.18.33.02.09.03.26.02.39z"/></svg></a>
+                <a href="#" class="social-icon"><svg viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg></a>
             </div>
         </div>
-        <div class="scroll-spacer"></div>
+        <div class="spacer"></div>
     </div>
 
     <div id="lib-view" class="view">
-        <div class="section-label">Подготовка к экзаменам</div>
-        <button class="list-item" onclick="openPage('IELTS Prep', 'Сборники тестов и аудиоматериалы для IELTS 2026.')">IELTS Materials <span>→</span></button>
-        <button class="list-item" onclick="openPage('SAT Practice', 'Актуальные вопросы и стратегии для SAT.')">SAT Materials <span>→</span></button>
-        <button class="list-item" onclick="openPage('TOEFL Tests', 'Полный курс подготовки к экзамену TOEFL.')">TOEFL Materials <span>→</span></button>
-        <div class="scroll-spacer"></div>
+        <div class="label">Образование</div>
+        <div class="grid-blocks">
+            <button class="block-item" onclick="openBook('IELTS Preparation', 'Материалы для IELTS.', 'lib-view', 'ni-l')"><span>IELTS Prep</span> <span>→</span></button>
+            <button class="block-item" onclick="openBook('SAT Practice', 'Материалы для SAT.', 'lib-view', 'ni-l')"><span>SAT Practice</span> <span>→</span></button>
+            <button class="block-item" onclick="openBook('TOEFL Guide', 'Материалы для TOEFL.', 'lib-view', 'ni-l')"><span>TOEFL Guide</span> <span>→</span></button>
+        </div>
+        <div class="spacer"></div>
     </div>
 
     <div id="prof-view" class="view">
-        <div class="profile-header">
-            <div class="avatar">🙋‍♂️</div>
-            <h2 style="margin:0">Мой аккаунт</h2>
-            <p style="opacity:0.6; margin:5px 0 0;">Дизайн и настройки</p>
+        <div class="label">Профиль</div>
+        <div class="grid-blocks">
+            <button class="block-item" onclick="openBook('Wishlist ❤️', 'Список желаемых книг.', 'prof-view', 'ni-u')"><span>Wishlist ❤️</span> <span>→</span></button>
+            <button class="block-item" onclick="openBook('Заметки 📝', 'Ваши цитаты.', 'prof-view', 'ni-u')"><span>Заметки 📝</span> <span>→</span></button>
+            <button class="block-item" onclick="switchTab('settings-view', 'ni-u')"><span>Настройки ⚙️</span> <span>→</span></button>
+            <button class="block-item" style="color:#cc0000;" onclick="location.reload()"><span>Выйти</span></button>
         </div>
-
-        <div class="section-label">Цвета приложения 🎨</div>
-        <div class="customizer-box">
-            <div class="color-row">
-                <span>Фон страницы</span>
-                <input type="color" id="bg-color" oninput="updateTheme()">
-            </div>
-            <div class="color-row">
-                <span>Цвет текста</span>
-                <input type="color" id="text-color" oninput="updateTheme()">
-            </div>
-            <div class="color-row">
-                <span>Цвет элементов</span>
-                <input type="color" id="nav-color" oninput="updateTheme()">
-            </div>
-            <button class="list-item" style="background:rgba(255,255,255,0.05); margin-top:10px;" onclick="resetTheme()">Сбросить всё</button>
-        </div>
-
-        <div class="section-label">Меню</div>
-        <button class="list-item" onclick="openPage('Wishlist', 'Ваш список желаемого пуст.')">Wishlist ❤️ <span>❯</span></button>
-        <button class="list-item" onclick="openPage('Заметки', 'Здесь будут ваши цитаты.')">Заметки 📝 <span>❯</span></button>
-        <button class="list-item" onclick="openPage('История', 'Вы еще ничего не прочитали.')">История 📖 <span>❯</span></button>
-
-        <button class="list-item" style="margin-top:20px; color:#ff4d4d; border:1px solid #ff4d4d; background:transparent;" onclick="location.reload()">Выйти</button>
-        <div class="scroll-spacer"></div>
+        <div class="spacer"></div>
     </div>
 
-    <div id="generic-view" class="view">
-        <button class="back-btn" onclick="goBack()">←</button>
-        <h1 id="page-title"></h1>
-        <div style="background:var(--nav); padding:30px; border-radius:25px;">
-            <p id="page-content" style="line-height:1.6;"></p>
-        </div>
-        <div class="scroll-spacer"></div>
-    </div>
-
-    <div id="book-details" class="view">
-        <button class="back-btn" onclick="goBack()">←</button>
-        <div style="text-align: center;">
-            <img id="detail-img" src="" style="width: 220px; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.4);">
-            <h1 id="detail-title" style="margin-top:25px;"></h1>
-            <p id="detail-author" style="opacity:0.6;"></p>
-            <div style="text-align:left; background:var(--nav); padding:30px; border-radius:25px; margin-top:20px;">
-                <p id="detail-desc"></p>
-                <button class="btn-read" style="width:100%; background:var(--text); color:var(--bg); padding:18px;">Начать чтение</button>
+    <div id="settings-view" class="view">
+        <button class="back-btn" onclick="switchTab('prof-view', 'ni-u')">← Назад в профиль</button>
+        <div class="sub-page-card">
+            <h2 style="margin:0 0 20px 0">Настройки темы</h2>
+            <div class="theme-grid">
+                <div class="theme-dot" style="background: #F8BBD0;" onclick="changeTheme('#F8BBD0')"></div>
+                <div class="theme-dot" style="background: #212121;" onclick="changeTheme('#212121')"></div>
+                <div class="theme-dot" style="background: #8D6E63;" onclick="changeTheme('#8D6E63')"></div>
+                <div class="theme-dot active" style="background: #D6CDBA;" onclick="changeTheme('#D6CDBA')"></div>
+                <div class="theme-dot" style="background: #BBDEFB;" onclick="changeTheme('#BBDEFB')"></div>
+                <div class="theme-dot" style="background: #C8E6C9;" onclick="changeTheme('#C8E6C9')"></div>
+                <div class="theme-dot theme-custom" onclick="document.getElementById('c-pick').click()"></div>
+                <input type="color" id="c-pick" style="display:none" oninput="changeTheme(this.value)">
             </div>
         </div>
-        <div class="scroll-spacer"></div>
+        <div class="spacer"></div>
     </div>
 
-    <nav class="nav-bar" id="main-nav">
-        <span id="ni-h" class="nav-link active" onclick="switchTab('home-view', 'ni-h')">🏠</span>
-        <span id="ni-l" class="nav-link" onclick="switchTab('lib-view', 'ni-l')">📚</span>
-        <span id="ni-u" class="nav-link" onclick="switchTab('prof-view', 'ni-u')">🙋‍♂️</span>
+    <div id="content-view" class="view">
+        <button class="back-btn" id="final-back">← Назад</button>
+        <div class="sub-page-card">
+            <h1 id="ct-title" style="margin-top:0; font-size: 32px;"></h1>
+            <p id="ct-body" style="line-height:1.8; font-size: 18px;"></p>
+        </div>
+        <div class="spacer"></div>
+    </div>
+
+    <nav class="nav-container">
+        <button id="ni-h" class="nav-btn active" onclick="switchTab('home-view', 'ni-h')">
+            <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+        </button>
+        <button id="ni-l" class="nav-btn" onclick="switchTab('lib-view', 'ni-l')">
+            <svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+        </button>
+        <button id="ni-u" class="nav-btn" onclick="switchTab('prof-view', 'ni-u')">
+            <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+        </button>
     </nav>
 </div>
 
 <script>
-    const library = [
-        { id: '1', title: "Steve Jobs", author: "Walter Isaacson", img: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1511288482i/11084145.jpg", desc: "История гения, создавшего Apple." },
-        { id: '2', title: "Elon Musk", author: "Ashlee Vance", img: "https://www.troykaonline.com/files/product/large/RU2042240_982040.jpg", desc: "О SpaceX, Tesla и колонизации Марса." },
-        { id: '3', title: "Atomic Habits", author: "James Clear", img: "https://m.media-amazon.com/images/I/81kg51XRc1L._SL400_.jpg", desc: "Как маленькие привычки меняют жизнь к лучшему." }
+    const books = [
+        { t: "Steve Jobs", s: "Walter Isaacson", i: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1511288482i/11084145.jpg" },
+        { t: "Elon Musk", s: "Ashlee Vance", i: "https://www.troykaonline.com/files/product/large/RU2042240_982040.jpg" },
+        { t: "Atomic Habits", s: "James Clear", i: "https://m.media-amazon.com/images/I/81kg51XRc1L._SL400_.jpg" },
+        { t: "1984", s: "George Orwell", i: "https://images-na.ssl-images-amazon.com/images/I/71kxa1-0mfL.jpg" },
+        { t: "Dune", s: "Frank Herbert", i: "https://images-na.ssl-images-amazon.com/images/I/41Jq0d60u6L._SX331_BO1,204,203,200_.jpg" }
     ];
 
-    let lastView = 'home-view';
-    let lastNav = 'ni-h';
-
-    // ТЕМЫ
-    function updateTheme() {
-        const bg = document.getElementById('bg-color').value;
-        const text = document.getElementById('text-color').value;
-        const nav = document.getElementById('nav-color').value;
-
-        document.documentElement.style.setProperty('--bg', bg);
-        document.documentElement.style.setProperty('--text', text);
-        document.documentElement.style.setProperty('--nav', nav);
-
-        localStorage.setItem('luminary_theme', JSON.stringify({ bg, text, nav }));
-    }
-
-    function loadTheme() {
-        const saved = JSON.parse(localStorage.getItem('luminary_theme'));
-        if (saved) {
-            document.getElementById('bg-color').value = saved.bg;
-            document.getElementById('text-color').value = saved.text;
-            document.getElementById('nav-color').value = saved.nav;
-            updateTheme();
-        } else {
-            document.getElementById('bg-color').value = "#1e293b";
-            document.getElementById('text-color').value = "#f1f5f9";
-            document.getElementById('nav-color').value = "#334155";
-        }
-    }
-
-    function resetTheme() {
-        localStorage.removeItem('luminary_theme');
-        location.reload();
-    }
-
-    // НАВИГАЦИЯ
     function switchTab(viewId, navId) {
-        lastView = viewId; lastNav = navId;
+        // МГНОВЕННОЕ СКРЫТИЕ ПОИСКА И КНОПКИ ПРОФИЛЯ
+        const searchWrapper = document.getElementById('search-wrapper');
+        const profileBtn = document.getElementById('top-profile-btn');
+
+        // Показываем поиск только на Главной и в Образовании
+        const showSearch = (viewId === 'home-view' || viewId === 'lib-view');
+        searchWrapper.style.display = showSearch ? 'flex' : 'none';
+
+        // Показываем кнопку профиля везде, КРОМЕ Профиля и Настроек
+        const showProfileBtn = (viewId !== 'prof-view' && viewId !== 'settings-view');
+        profileBtn.style.display = showProfileBtn ? 'flex' : 'none';
+
         document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
         document.getElementById(viewId).classList.add('active');
-        document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
-        document.getElementById(navId).classList.add('active');
-        document.getElementById('main-header').style.display = 'flex';
-        document.getElementById('main-nav').style.display = 'flex';
-        window.scrollTo(0, 0);
+
+        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+        if(navId) document.getElementById(navId).classList.add('active');
+
+        if (viewId === 'home-view') resetSearch();
+        window.scrollTo(0,0);
     }
 
-    function showSub(viewId) {
-        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-        document.getElementById(viewId).classList.add('active');
-        document.getElementById('main-header').style.display = 'none';
-        document.getElementById('main-nav').style.display = 'none';
-        window.scrollTo(0, 0);
-    }
+    function handleSearch(val) {
+        const query = val.toLowerCase().trim();
+        const homeView = document.getElementById('home-view');
 
-    function openPage(title, content) {
-        document.getElementById('page-title').innerText = title;
-        document.getElementById('page-content').innerText = content;
-        showSub('generic-view');
-    }
+        if (query === "") {
+            resetSearch();
+            return;
+        }
 
-    function openBook(id) {
-        const book = library.find(b => b.id === id);
-        document.getElementById('detail-img').src = book.img;
-        document.getElementById('detail-title').innerText = book.title;
-        document.getElementById('detail-author').innerText = book.author;
-        document.getElementById('detail-desc').innerText = book.desc;
-        showSub('book-details');
-    }
-
-    function renderGrid(books) {
-        const grid = document.getElementById('book-grid');
-        grid.innerHTML = '';
-        books.forEach(book => {
-            const card = document.createElement('div');
-            card.className = 'book-card';
-            card.style.backgroundImage = `url('${book.img}')`;
-            card.onclick = () => openBook(book.id);
-            grid.appendChild(card);
+        homeView.classList.add('searching');
+        document.querySelectorAll('.book-card').forEach((card, index) => {
+            const title = books[index].t.toLowerCase();
+            if (title.includes(query)) {
+                card.classList.remove('hidden');
+            } else {
+                card.classList.add('hidden');
+            }
         });
     }
 
-    function liveSearch() {
-        const query = document.getElementById('main-search').value.toLowerCase();
-        renderGrid(library.filter(b => b.title.toLowerCase().includes(query)));
+    function resetSearch() {
+        document.getElementById('home-view').classList.remove('searching');
+        document.querySelectorAll('.book-card').forEach(card => card.classList.remove('hidden'));
+        document.getElementById('main-search').value = "";
     }
 
-    function goBack() { switchTab(lastView, lastNav); }
-
-    // СЛАЙДЕР
-    let slideIdx = 0;
-    function slider() {
-        const book = library[slideIdx % library.length];
-        const h = document.getElementById('hero');
-        if(h && document.getElementById('home-view').classList.contains('active')) {
-            h.style.backgroundImage = `url('${book.img}')`;
-            document.getElementById('hero-name').innerText = book.title;
-            document.getElementById('hero-author').innerText = book.author;
-            document.getElementById('hero-btn').onclick = () => openBook(book.id);
-        }
-        slideIdx++;
+    function openBook(title, body, fromView, fromNav) {
+        document.getElementById('ct-title').innerText = title;
+        document.getElementById('ct-body').innerText = body;
+        document.getElementById('final-back').onclick = () => switchTab(fromView, fromNav);
+        switchTab('content-view', fromNav);
     }
 
-    // СТАРТ
-    loadTheme();
-    renderGrid(library);
-    setInterval(slider, 4500);
-    slider();
+    function changeTheme(color) {
+        document.documentElement.style.setProperty('--bg-page', color);
+        const isDark = color === '#212121' || color === '#8D6E63';
+        document.body.style.color = isDark ? '#FFFFFF' : '#4A4238';
+        document.querySelectorAll('.theme-dot').forEach(d => {
+            d.classList.remove('active');
+            if(d.style.backgroundColor === color) d.classList.add('active');
+        });
+        localStorage.setItem('user_theme', color);
+    }
+
+    function renderBooks() {
+        document.getElementById('book-grid').innerHTML = books.map(b => `
+            <div class="book-card" style="background-image:url('${b.i}')" onclick="openBook('${b.t}', 'Обзор книги ${b.t}.', 'home-view', 'ni-h')"></div>
+        `).join('');
+    }
+
+    let slide = 0;
+    function rotateHero() {
+        const b = books[slide % books.length];
+        document.getElementById('hero').style.backgroundImage = `url('${b.i}')`;
+        document.getElementById('hero-title').innerText = b.t;
+        document.getElementById('hero-sub').innerText = b.s;
+        slide++;
+    }
+
+    function openHeroBook() {
+        const b = books[(slide - 1) % books.length];
+        openBook(b.t, `Книга дня: ${b.t}.`, 'home-view', 'ni-h');
+    }
+
+    const saved = localStorage.getItem('user_theme');
+    if(saved) changeTheme(saved);
+    renderBooks();
+    rotateHero();
+    setInterval(rotateHero, 5000);
 </script>
 
 </body>

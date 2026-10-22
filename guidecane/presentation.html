@@ -129,9 +129,9 @@ svg.focus-links{position:absolute;inset:0;width:100%;height:100%;z-index:11;poin
     <div class="detail-rail" aria-label="Explore model details">
       <div class="rail-title">Explore details</div>
       <div class="detail-list" id="detailList">
-        <button type="button" data-focus="sensors">Eight-direction sensor collar</button>
+        <button type="button" data-focus="sensors">Collar + near-tip sensor</button>
         <button type="button" data-focus="electronics">Inside: battery + Pico 2</button>
-        <button type="button" data-focus="grip">Audio + controls</button>
+        <button type="button" data-focus="grip">Object button + alerts</button>
         <button type="button" data-focus="hook">Rear hook</button>
         <button type="button" data-focus="shaft">Aluminium shaft</button>
         <button type="button" data-focus="tip">Tactile tip</button>
@@ -163,68 +163,40 @@ svg.focus-links{position:absolute;inset:0;width:100%;height:100%;z-index:11;poin
     <div class="hint">Drag to rotate · scroll to zoom</div>
   </div>
   <aside class="panel">
-    <span class="eyebrow">Vision · Independent mobility</span>
-    <h1>GuideCane</h1>
-    <div class="tag">Distance alerts around the cane and toward the ground.</div>
-    <p>GuideCane is a camera-free prototype for people with low or no vision. Eight small time-of-flight (ToF) modules face outward around a low collar, and a ninth points down toward the ground. The handle gives adjustable sound and distinct vibration alerts. A Raspberry Pi Pico 2 runs simple distance rules; there is no navigator or onboard AI.</p>
-
-    <h3>How it works</h3>
-    <div class="flow"><div><strong>Sense</strong>Eight directions around the shaft, plus one ground reading</div><span>&rarr;</span><div><strong>Filter</strong>Grip-aware, user-calibrated rear quiet zone</div><span>&rarr;</span><div><strong>Alert</strong>Beep and vibration; possible drops take priority</div></div>
-
-    <h3>Parts</h3>
-    <ol class="parts">
-      <li><b>1</b><span><em>Grip</em>: buzzer, vibration motor, volume and test buttons</span></li>
-      <li><b>2</b><span><em>Ring</em>: eight staggered VL53L1X ToF modules, one every 45°</span></li>
-      <li><b>3</b><span><em>Ground sensor</em>: ninth module under the collar points down</span></li>
-      <li><b>4</b><span><em>Electronics</em>: Pico 2, I²C multiplexer and rechargeable battery</span></li>
-      <li><b>5</b><span><em>Cane</em>: aluminium shaft, rubber grip and tactile tip</span></li>
-      <li><b>6</b><span><em>Rear hook</em>: small catch behind the handle</span></li>
-    </ol>
-
-    <h3>How it avoids alerting on its user</h3>
-    <p>The backward-facing sensors can see the holder's hand or legs. A grip switch activates a short rear quiet zone calibrated while the person holds and sweeps the cane. Front and downward directions stay active, and a sudden drop takes priority. This is a <b>body-position filter, not person recognition</b>: another person inside that quiet zone can also be missed. A supervised trial must measure missed hazards before anyone relies on it.</p>
-    <p>Eight modules sample eight directions around 360°. A VL53L1X has a typical 27° field of view, so 45° spacing leaves gaps. The diagram is a 360° arrangement, <b>not continuous 360° obstacle detection</b>. Sweeping the cane helps, but the tactile tip remains essential.</p>
-
-    <h3>Prototype facts</h3>
-    <div class="facts">
-      <div><small>Shaft material</small><b>Aluminium</b></div>
-      <div><small>Power</small><b>Rechargeable Li-ion</b></div>
-      <div><small>Length</small><b>About 120 cm</b></div>
-      <div><small>Parts estimate</small><b>$123.50 before shipping</b></div>
-      <div><small>Regular cane</small><b>Reference: 200 g</b></div>
-      <div><small>GuideCane</small><b>Estimated: about 368 g</b></div>
-    </div>
-    <details class="breakdown" open><summary>Cost breakdown</summary><div class="inside">
-      <table aria-label="Prototype cost breakdown">
-        <tr><td>Basic folding cane (estimate)</td><td>$6.00</td></tr>
-        <tr><td><a href="https://www.raspberrypi.com/products/raspberry-pi-pico-2/" target="_blank" rel="noopener noreferrer">Raspberry Pi Pico 2</a></td><td>$5.00</td></tr>
-        <tr><td><a href="https://shop.m5stack.com/products/time-of-flight-distance-unit-vl53l1x" target="_blank" rel="noopener noreferrer">9 × M5Stack VL53L1X ($8.95 each)</a></td><td>$80.55</td></tr>
-        <tr><td><a href="https://www.adafruit.com/product/2717" target="_blank" rel="noopener noreferrer">8-channel I²C multiplexer</a></td><td>$6.95</td></tr>
-        <tr><td>Battery and charging parts (estimate)</td><td>$8.00</td></tr>
-        <tr><td>Buzzer, vibration, buttons, grip switch (estimate)</td><td>$5.00</td></tr>
-        <tr><td>Collar, mounts and wiring (estimate)</td><td>$12.00</td></tr>
-        <tr><td>Estimated parts total</td><td><b>$123.50</b></td></tr>
-      </table>
-      The eight radial modules share one I²C address and use the multiplexer; the downward module uses the Pico 2's second I²C bus. The $6 cane and other unlinked entries are planning allowances, not checked store prices. Shipping, tax, tools, labour and testing are excluded. The earlier two-sensor model cost $37.90; adding seven $8.95 modules, a $6.95 multiplexer and a stronger collar raises this version by $85.60.
-    </div></details>
-    <details class="breakdown"><summary>Why removing AI barely changed the old price</summary><div class="inside">The old bill of materials never included a separate AI processor, GPU or navigation hardware. It already used a $5 Pico 2 for simple rules. Removing voice/navigation reduced a few parts, while upgrading the obstacle sensors consumed those savings. There is no paid AI component to subtract from the $37.90 two-sensor estimate.</div></details>
-    <details class="breakdown"><summary>Weight breakdown</summary><div class="inside">
-      <table aria-label="Prototype weight breakdown">
-        <tr><td>Regular folding cane</td><td>200 g</td></tr>
-        <tr><td>Battery</td><td>55 g</td></tr>
-        <tr><td>Pico board and mount</td><td>12 g</td></tr>
-        <tr><td>9 sensors, about 4.3 g each</td><td>39 g</td></tr>
-        <tr><td>Multiplexer</td><td>2 g</td></tr>
-        <tr><td>Buzzer, motor and controls</td><td>5 g</td></tr>
-        <tr><td>Collar, wiring and mounts</td><td>55 g</td></tr>
-        <tr><td>Estimated assembled weight</td><td><b>368 g</b></td></tr>
-      </table>
-      About 168 g more than this <a href="https://mobilex.pl/en/products/foldable-blindcane/" target="_blank" rel="noopener noreferrer">200 g, 120 cm reference cane</a>. Budget roughly 350–390 g until the assembly is weighed. The low collar increases swing effort and must be tested with cane users.
-    </div></details>
-    <h3>Real component photos</h3>
-    <div class="component-photos" id="componentPhotos"></div>
-    <div class="note"><b>Month 2 demonstration:</b> measure alert timing, missed obstacles, rear-zone false alarms and downward-sensor errors on different surfaces. A ToF reading alone cannot establish a safe crossing or stair edge.</div>
-  </aside>
+<span class="eyebrow">Vision · Independent mobility</span><h1>GuideCane</h1>
+<div class="tag">A hollow metal cane with routed wiring and drop sensing near its tip.</div>
+<p>This camera-free concept uses eight outward-facing ToF modules around a low collar and a separate downward sensor mounted near the bottom of a custom aluminium tube. Wires run inside the tube to the battery and controller in the upper sleeve. Alerts are beeps and vibration; the object button requests a fresh distance-and-direction reading.</p>
+<h3>How it works</h3><div class="flow"><div><strong>Sense</strong>Eight outward directions and one angled-down reading near the tip</div><span>&rarr;</span><div><strong>Check</strong>Short rear quiet zone reduces readings from the holder</div><span>&rarr;</span><div><strong>Alert</strong>Different beep and vibration patterns for obstacle and possible drop</div></div>
+<h3>Parts and controls</h3><ol class="parts">
+<li><b>1</b><span><em>Metal tube</em>: 1/2 in. hollow aluminium, cut to the fitted cane length; wiring protected inside</span></li>
+<li><b>2</b><span><em>Eight-sensor collar</em>: one outward module every 45°; sensors alternate height to fit</span></li>
+<li><b>3</b><span><em>Drop sensor</em>: separate VL53L1X in a guarded pod just above the tip, angled down and slightly ahead</span></li>
+<li><b>4</b><span><em>Object button</em>: raised tactile button on the grip; a press reports nearest measured distance and direction with coded beeps/vibration</span></li>
+<li><b>5</b><span><em>Upper sleeve</em>: Pico 2, protected LiPo battery, charger, buzzer and vibration motor</span></li>
+<li><b>6</b><span><em>Physical tip</em>: rolling cane tip and custom adapter preserve contact with the ground</span></li></ol>
+<p><b>Limits:</b> The button cannot say whether a return is a person, wall or vehicle; distance-only ToF sensors do not classify objects. A single downward beam can miss a narrow hole or dark/reflective surface. The rear quiet zone can hide another person there. The tactile tip remains the primary mobility cue, and the prototype needs supervised testing with cane users.</p>
+<h3>Price comparison</h3><p>Your <a href="https://estore.st.com/en/vl53l1cxv0fy-1-cpn.html" target="_blank" rel="noopener noreferrer">ST VL53L1X bare chip costs $5.97</a> for quantities 1–9. Nine chips are $53.73, $26.82 below nine $8.95 breakout modules. The bare chips require custom carrier PCBs, 2.8 V power design and reflow assembly, so that difference is <b>not a finished-cane saving</b>. The bill below uses ready-to-wire modules for a buildable Month 2 prototype.</p>
+<h3>Linked parts budget</h3><details class="breakdown" open><summary>Prices and product links</summary><div class="inside"><table aria-label="Linked prototype bill of materials">
+<tr><td><a href="https://www.homedepot.com/p/332735521" target="_blank" rel="noopener noreferrer">4 ft hollow aluminium tube</a></td><td>$16.62</td></tr>
+<tr><td><a href="https://www.raspberrypi.com/products/raspberry-pi-pico-2/" target="_blank" rel="noopener noreferrer">Pico 2 controller</a></td><td>$5.00</td></tr>
+<tr><td><a href="https://shop.m5stack.com/products/time-of-flight-distance-unit-vl53l1x" target="_blank" rel="noopener noreferrer">8 outward VL53L1X modules × $8.95</a></td><td>$71.60</td></tr>
+<tr><td><a href="https://shop.m5stack.com/products/time-of-flight-distance-unit-vl53l1x" target="_blank" rel="noopener noreferrer">1 bottom drop VL53L1X module</a></td><td>$8.95</td></tr>
+<tr><td><a href="https://www.adafruit.com/product/2717" target="_blank" rel="noopener noreferrer">8-channel I²C multiplexer</a></td><td>$6.95</td></tr>
+<tr><td><a href="https://www.adafruit.com/product/258" target="_blank" rel="noopener noreferrer">Protected 1200 mAh LiPo battery</a></td><td>$9.95</td></tr>
+<tr><td><a href="https://www.adafruit.com/product/6091" target="_blank" rel="noopener noreferrer">USB-C LiPo charger</a></td><td>$6.95</td></tr>
+<tr><td><a href="https://www.adafruit.com/product/160" target="_blank" rel="noopener noreferrer">Piezo buzzer</a></td><td>$1.50</td></tr>
+<tr><td><a href="https://www.adafruit.com/product/1201" target="_blank" rel="noopener noreferrer">Vibration motor</a></td><td>$1.95</td></tr>
+<tr><td><a href="https://www.adafruit.com/product/1119" target="_blank" rel="noopener noreferrer">Tactile button pack: object, volume, test</a></td><td>$2.50</td></tr>
+<tr><td><a href="https://www.adafruit.com/product/166" target="_blank" rel="noopener noreferrer">Grip pressure sensor</a></td><td>$3.95</td></tr>
+<tr><td><a href="https://www.adafruit.com/category/product/1970" target="_blank" rel="noopener noreferrer">26 AWG wire, 3 × 2 m</a></td><td>$2.85</td></tr>
+<tr><td><a href="https://www.adafruit.com/product/756" target="_blank" rel="noopener noreferrer">Motor drive transistor pack</a></td><td>$1.95</td></tr>
+<tr><td><a href="https://www.maxiaids.com/product/ambutech-rolling-ball-tip-hook-style-white" target="_blank" rel="noopener noreferrer">Rolling cane tip</a></td><td>$9.59</td></tr>
+<tr><td>Published-price subtotal</td><td><b>$150.31</b></td></tr></table>
+<p><a href="https://jlc3dp.com/" target="_blank" rel="noopener noreferrer">Custom collar, guarded sensor pod, handle and tip adapter</a> need a drawing and fabrication quote. Planning allowance: $20–$50, making a rough total of <b>$170–$200</b> before shipping, tax, tools and assembly labour. Every priced item above links to its product page; prices can change. The object button is included in the switch pack, so it adds no extra pack purchase.</p></div></details>
+<details class="breakdown"><summary>Weight and ergonomics</summary><div class="inside">Approximate mass: aluminium tube about 145 g by its published diameter and wall thickness; nine sensor modules about 39 g; protected battery 23 g; other electronics, tip and custom mounts about 90–140 g. Expected prototype: <b>roughly 300–350 g</b>, compared with a <a href="https://mobilex.pl/en/products/foldable-blindcane/" target="_blank" rel="noopener noreferrer">200 g reference cane</a>. Weigh the actual build; a lower pod changes swing feel even if total mass is modest.</div></details>
+<h3>Real component photos</h3><div class="component-photos" id="componentPhotos"></div>
+<div class="note"><b>Month 2 demonstration:</b> test hole/drop warnings on real surfaces, false alerts from the holder, button usability by touch, water protection, cable strain relief and cane balance with blind participants and an orientation-and-mobility specialist.</div>
+</aside>
 </div>
 
 <script>/**
@@ -257,9 +229,8 @@ const pivot=new THREE.Group();scene.add(pivot);
 const cane=new THREE.Group();pivot.add(cane);
 const shaft=M(0xF3F4F2,{metalness:.55,roughness:.3}), band=M(0xC8372D,{metalness:.3,roughness:.35}), rubber=M(0x272C33,{metalness:.05,roughness:.85}), accent=M(0xE8823A,{metalness:.2,roughness:.4}), dark=M(0x5E6B78,{metalness:.4,roughness:.35}), glass=M(0x26333D,{metalness:.5,roughness:.16});
 
-// Slim three-section body with bright reflective markers
-const segs=[[.4,1.95],[2.02,3.65],[3.72,5.25]];
-segs.forEach(([a,b],i)=>{cane.add(shell(cyl(.065,.073,b-a,shaft,0,(a+b)/2,0,28)));if(i<2)cane.add(cyl(.087,.087,.09,dark,0,b+.025,0,28));});
+// One hollow metal tube carries the protected wiring.
+cane.add(shell(cyl(.07,.07,4.85,shaft,0,2.825,0,32)));
 [1.78,3.52,4.62].forEach(y=>cane.add(cyl(.076,.076,.11,band,0,y,0,28)));
 // Narrow tactile tip
 cane.add(cyl(.09,.07,.23,rubber,0,.32,0,28));
@@ -276,7 +247,12 @@ function lens(y,down,azimuth=0){const g=new THREE.Group();g.position.set(Math.si
   const optic=mesh(new THREE.CylinderGeometry(.039,.039,.043,24),glass,0,0,.012);optic.rotation.x=Math.PI/2;g.add(optic);
   head.add(g);return g;}
 const ringLenses=Array.from({length:8},(_,i)=>lens(i%2 ? -.07 : .08,false,i*Math.PI/4));
-const lensDown=lens(-.35,true);
+// Guarded hole/drop sensor is low on the shaft, ahead of the physical tip.
+const bottomPod=new THREE.Group();bottomPod.position.set(0,.38,0);cane.add(bottomPod);
+bottomPod.add(shell(cyl(.115,.09,.19,dark,0,0,0,28)));
+const lensDown=new THREE.Group();lensDown.position.set(0,-.035,.12);lensDown.rotation.x=Math.PI/3;bottomPod.add(lensDown);
+const dropRim=mesh(new THREE.CylinderGeometry(.055,.055,.038,24),accent);dropRim.rotation.x=Math.PI/2;lensDown.add(dropRim);
+const dropOptic=mesh(new THREE.CylinderGeometry(.039,.039,.043,24),glass,0,0,.012);dropOptic.rotation.x=Math.PI/2;lensDown.add(dropOptic);
 // Rounded electronics sleeve with tapered joins and two visible inner columns
 const circuit=M(0x30414C,{metalness:.28,roughness:.36}), copper=M(0xD7A17B,{metalness:.55,roughness:.26});
 cane.add(shell(cyl(.225,.225,.73,dark,0,4.75,0,40)));
@@ -308,11 +284,11 @@ internals.add(cyl(.025,.025,.018,gold,-.105,5.067,-.015,20));
 internals.add(cyl(.068,.068,.018,rubber,-.105,4.45,-.015,32));
 internals.add(mesh(new THREE.BoxGeometry(.075,.025,.006),shaft,-.105,4.71,.056));
 internals.add(mesh(new THREE.BoxGeometry(.052,.012,.006),shaft,-.105,4.66,.056));
-internals.add(cyl(.018,.018,3.35,wireRed,.022,2.96,.005,12));
-internals.add(cyl(.012,.012,3.35,wireBlack,-.022,2.96,-.01,12));
+internals.add(cyl(.018,.018,4.3,wireRed,.022,2.51,.005,12));
+internals.add(cyl(.012,.012,4.3,wireBlack,-.022,2.51,-.01,12));
 const sensorBoards=new THREE.Group();sensorBoards.position.set(0,.98,0);internals.add(sensorBoards);
 for(let i=0;i<8;i++){const a=i*Math.PI/4,b=new THREE.Group();b.position.set(Math.sin(a)*.14,i%2?-.07:.08,Math.cos(a)*.14);b.rotation.y=a;sensorBoards.add(b);b.add(mesh(new THREE.BoxGeometry(.11,.12,.022),pcb));b.add(mesh(new THREE.BoxGeometry(.052,.048,.025),glass,0,0,.022));}
-const groundBoard=new THREE.Group();groundBoard.position.set(0,-.35,.17);groundBoard.rotation.x=Math.PI/2;sensorBoards.add(groundBoard);groundBoard.add(mesh(new THREE.BoxGeometry(.16,.13,.025),pcb,0,0,-.03));groundBoard.add(mesh(new THREE.BoxGeometry(.075,.06,.045),glass,0,0,.015));
+const groundBoard=new THREE.Group();groundBoard.position.set(0,.36,.12);groundBoard.rotation.x=Math.PI/3;internals.add(groundBoard);groundBoard.add(mesh(new THREE.BoxGeometry(.16,.13,.025),pcb,0,0,-.03));groundBoard.add(mesh(new THREE.BoxGeometry(.075,.06,.045),glass,0,0,.015));
 internals.add(cyl(.11,.11,.035,glass,0,5.94,0,24));
 internals.add(cyl(.055,.055,.08,copper,0,6.27,0,24));
 // Charging socket on the rear of the electronics sleeve
@@ -324,7 +300,8 @@ for(let i=0;i<5;i++)cane.add(mesh(new THREE.BoxGeometry(.2,.022,.018),dark,0,5.7
 cane.add(mesh(new THREE.SphereGeometry(.025,12,10),accent,0,5.63,.186));
 const rocker=mesh(new THREE.BoxGeometry(.11,.25,.07),accent,.19,6.04,0);cane.add(rocker);
 cane.add(cyl(.19,.19,.12,accent,0,6.59,0,40));
-const confirm=mesh(new THREE.SphereGeometry(.08,24,16),accent,0,6.34,.19);cane.add(confirm);
+const scanButton=mesh(new THREE.SphereGeometry(.095,24,16),accent,0,6.34,.19);cane.add(scanButton);
+const scanButtonRim=mesh(new THREE.TorusGeometry(.11,.013,10,32),dark,0,6.34,.19);cane.add(scanButtonRim);
 // Short hook extends toward -Z, opposite the +Z-facing sensors
 cane.add(cyl(.065,.065,.28,dark,0,6.78,0,28));
 const hookBar=cyl(.055,.055,.58,dark,0,6.92,-.27,28);hookBar.rotation.x=Math.PI/2;cane.add(hookBar);
@@ -341,7 +318,7 @@ function waveSet(origin,dir){const arr=[];for(let i=0;i<4;i++){
   const r=mesh(new THREE.RingGeometry(.9,1,48,1,-Math.PI/4.5,Math.PI/2.25),m);r.castShadow=false;
   const g=new THREE.Group();g.position.copy(origin);g.rotation.x=dir; g.add(r);r.rotation.y=-Math.PI/2;r.rotation.order='YXZ';
   waves.add(g);arr.push({g,r,m,phase:i/4});}return arr;}
-const W=[...Array.from({length:8},(_,i)=>{const a=i*Math.PI/4;return waveSet(new THREE.Vector3(Math.sin(a)*.18,i%2?-.07:.08,Math.cos(a)*.18),0).map(w=>{w.g.rotation.y=a;return w;});}).flat(),...waveSet(new THREE.Vector3(0,-.35,.17),Math.PI/2)];
+const W=[...Array.from({length:8},(_,i)=>{const a=i*Math.PI/4;return waveSet(new THREE.Vector3(Math.sin(a)*.18,i%2?-.07:.08,Math.cos(a)*.18),0).map(w=>{w.g.rotation.y=a;return w;});}).flat(),...waveSet(new THREE.Vector3(0,-.62,.12),Math.PI/3)];
 // orient: ring geometry lies in XY plane; rotate so arcs open toward +z
 W.forEach(w=>{w.r.rotation.set(0,-Math.PI/2,0);});
 
@@ -354,9 +331,9 @@ cane.rotation.z=-.16; cane.position.x=.5;
 // callouts: [num,label,anchor(local to cane), side]
 const C=[
  [1,'Audio + haptic grip',new THREE.Vector3(.2,6.05,0),'r'],
- [2,'Volume + alert test',new THREE.Vector3(.19,6.12,0),'l'],
+ [2,'Object scan button + volume',new THREE.Vector3(0,6.34,.19),'l'],
  [3,'Eight ToF modules around collar',new THREE.Vector3(.16,1.07,.18),'r'],
- [4,'Downward ToF sensor',new THREE.Vector3(0,.63,.17),'l'],
+ [4,'Near-tip hole/drop sensor',new THREE.Vector3(0,.36,.12),'l'],
  [5,'Battery inside upper sleeve',new THREE.Vector3(-.105,4.75,.18),'l'],
  [6,'Tactile cane tip',new THREE.Vector3(-.17,.2,0),'l'],
  [7,'Rear-facing hook',new THREE.Vector3(0,6.9,-.55),'r'],
@@ -370,7 +347,7 @@ const X=[
  [1,'Li-ion battery',new THREE.Vector3(-.11,4.73,0),'l'],
  [2,'Main board · Pico 2',new THREE.Vector3(.105,4.76,.11),'r'],
  [3,'Wires in shaft',new THREE.Vector3(.02,3.1,.01),'r'],
- [4,'Eight radial + one downward ToF',new THREE.Vector3(0,.98,.05),'l'],
+ [4,'Eight radial + near-tip ToF',new THREE.Vector3(0,.36,.12),'l'],
  [5,'Alert buzzer',new THREE.Vector3(0,5.94,.02),'l'],
  [6,'Vibration motor',new THREE.Vector3(0,6.27,.02),'r']
 ];
@@ -381,11 +358,11 @@ const xels=X.map(c=>{const d=document.createElement('div');d.className='callout 
 let rotY=.5,rotX=0,vel=.0045,drag=false,lx=0,ly=0,spin=true,showWaves=true,xrayOn=false;
 let focus=null,viewSpec=null,focusMix=0,savedControls=null,alignFocus=false;
 const focusViews={
-  sensors:{title:'Eight radial ToF modules + ground sensor',text:'Eight staggered VL53L1X modules face outward every 45 degrees, and a ninth points down. The 27-degree sensor field of view leaves gaps between radial directions. A calibrated rear quiet zone can reduce alerts caused by the holder, but may also hide another person there.',point:new THREE.Vector3(0,.98,0),distance:3.9,rotation:0},
+  sensors:{title:'Eight radial modules + near-tip drop sensor',text:'Eight ready-to-wire VL53L1X modules face outward around the collar. A separate guarded VL53L1X sits just above the tactile tip and looks down and slightly ahead. It flags a possible loss of ground return, but cannot guarantee detection of narrow holes.',point:new THREE.Vector3(0,.75,0),distance:3.9,rotation:0},
   electronics:{title:'Battery + main control board',text:'The blue battery sits inside the upper sleeve, to the left of the green Raspberry Pi Pico 2 board. Select X-Ray to see both separate components.',point:new THREE.Vector3(0,4.75,.1),distance:3.1,rotation:0},
-  grip:{title:'Buzzer + vibration motor',text:'In X-Ray, the lower round disc represents the buzzer; the smaller disc above it is the vibration motor. The outside has volume buttons and an alert test button.',point:new THREE.Vector3(0,6.08,.1),distance:4.1,rotation:0},
+  grip:{title:'Object scan button and alerts',text:'The raised button requests a fresh sensor reading. Coded beeps and vibration indicate the nearest detected direction and approximate distance. The button does not identify the object type. Volume and test buttons sit beside it.',point:new THREE.Vector3(0,6.08,.1),distance:4.1,rotation:0},
   hook:{title:'Rear-facing hook',text:'A short catch extends backward from the top of the handle, opposite the forward-facing sensors.',point:new THREE.Vector3(0,6.85,-.35),distance:3.9,rotation:Math.PI},
-  shaft:{title:'Aluminium shaft',text:'The main body is lightweight folding aluminium tubing with red reflective bands. A simple rubber grip and plastic tip complete the base cane.',point:new THREE.Vector3(0,3.15,0),distance:5,rotation:0},
+  shaft:{title:'Custom hollow aluminium tube',text:'A 1/2-inch outside-diameter metal tube carries insulated sensor wires inside. The tube is cut to the user’s cane length. Bushings and strain relief protect wires at entry and exit holes.',point:new THREE.Vector3(0,3.15,0),distance:5,rotation:0},
   tip:{title:'Tactile cane tip',text:'The tip stays in physical contact with the ground so the cane still provides ordinary tactile feedback.',point:new THREE.Vector3(0,.24,0),distance:3.9,rotation:0}
 };
 const detailList=document.getElementById('detailList'),focusCard=document.getElementById('focusCard');
@@ -398,7 +375,7 @@ const focusPartMap={
   ],
   sensors:[
     {photo:'tof',title:'VL53L1X radial modules × 8',description:'Staggered around the low collar; 45° apart',source:'https://shop.m5stack.com/products/time-of-flight-distance-unit-vl53l1x',anchor:new THREE.Vector3(0,1.07,.20)},
-    {photo:'tof',title:'VL53L1X ground module',description:'Ninth sensor faces downward',source:'https://shop.m5stack.com/products/time-of-flight-distance-unit-vl53l1x',anchor:new THREE.Vector3(0,.63,.17)}
+    {photo:'tof',title:'VL53L1X ground module',description:'Near-tip pod looks down and ahead',source:'https://shop.m5stack.com/products/time-of-flight-distance-unit-vl53l1x',anchor:new THREE.Vector3(0,.36,.12)}
   ],
   grip:[
     {photo:'buzzer',title:'Alert buzzer',description:'Round disc lower in the handle',source:'https://www.adafruit.com/product/160',anchor:new THREE.Vector3(0,5.94,.02)},

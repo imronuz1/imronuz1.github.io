@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Luminary - SAT 650</title>
+    <title>Luminary — Проекты и библиотека</title>
+    <meta name="description" content="Проекты GuideCane Lite и ADAPT / ONE, книги и учебные материалы Luminary.">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -61,6 +62,14 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.03); transition: 0.2s;
         }
         .block-item:hover { transform: translateY(-3px); }
+        .project-card { box-sizing: border-box; text-decoration: none; align-items: flex-start; gap: 16px; }
+        .project-card h3 { margin: 0 0 10px; font-size: 22px; }
+        .project-card p { margin: 0; font-size: 16px; font-weight: 400; line-height: 1.6; }
+        .project-card small { display: block; margin-top: 12px; font-size: 14px; font-weight: 600; }
+        .project-card:focus-visible { outline: 3px solid var(--text-main); outline-offset: 4px; }
+        .project-image { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; border-radius: 16px; margin-bottom: 16px; }
+        .page-title { font-size: 28px; margin: 0 0 20px; }
+        .grid-blocks { grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); }
 
         /* SAT Interior Styles */
         .inner-search {
@@ -105,14 +114,35 @@
 <div class="container">
     <header id="main-header">
         <div class="search-bar">
-            <input type="text" id="main-search" placeholder="Поиск в библиотеке" oninput="handleGlobalSearch(this.value)">
+            <input type="text" id="main-search" placeholder="Поиск проектов и книг" aria-label="Поиск проектов и книг" oninput="handleGlobalSearch(this.value)">
         </div>
-        <button id="top-profile-btn" class="profile-top-btn" onclick="switchTab('prof-view', 'ni-u')">
+        <button id="top-profile-btn" aria-label="Профиль" class="profile-top-btn" onclick="switchTab('prof-view', 'ni-u')">
             <svg viewBox="0 0 24 24" width="24" height="24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
         </button>
     </header>
 
     <div id="home-view" class="view active">
+        <h1 class="page-title">Luminary — проекты и библиотека</h1>
+        <section id="projects" aria-labelledby="projects-label">
+            <h2 class="label" id="projects-label">Проекты</h2>
+            <div class="grid-blocks">
+                <a class="block-item project-card" href="guidecane/presentation.html">
+                    <div><img class="project-image" src="guidecane/assets/guidecane-lite-concept.webp" alt="Концепт GuideCane Lite: металлическая трость с двумя датчиками и внешним USB power bank" width="1536" height="1024">
+                        <h3>GuideCane Lite</h3>
+                        <p>Электронное дооснащение трости примерно за $28.95: два VL53L1X, Pico 2 и звуковые сигналы. Один сенсор направлен вперёд, второй — вниз у наконечника.</p>
+                        <small>Бюджет новых деталей: трость, USB power bank, кабель и крепления используются повторно. Экспериментальный прототип.</small>
+                        <small>Изображение создано ИИ: возможный внешний вид, не фотография готового устройства.</small>
+                    </div><span aria-hidden="true">→</span>
+                </a>
+                <a class="block-item project-card" href="adapt-one/index.html">
+                    <div><h3>ADAPT / ONE</h3>
+                        <p>Концепт модульного механического протеза кисти со сменными наконечниками и интерактивными режимами хвата.</p>
+                        <small>Интерактивная 3D-модель · концепт прототипа</small>
+                    </div><span aria-hidden="true">→</span>
+                </a>
+            </div>
+        </section>
+        <h2 class="label">Книга дня</h2>
         <div id="hero" class="hero" onclick="openHeroBook()">
             <div class="hero-overlay"></div>
             <div class="hero-text">
@@ -150,10 +180,10 @@
         </div>
     </div>
 
-    <nav class="nav-container">
-        <button id="ni-h" class="nav-btn active" onclick="switchTab('home-view', 'ni-h')"><svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg></button>
-        <button id="ni-l" class="nav-btn" onclick="switchTab('lib-view', 'ni-l')"><svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg></button>
-        <button id="ni-u" class="nav-btn" onclick="switchTab('prof-view', 'ni-u')"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></button>
+    <nav class="nav-container" aria-label="Основная навигация">
+        <button id="ni-h" aria-label="Главная: проекты и книги" class="nav-btn active" onclick="switchTab('home-view', 'ni-h')"><svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg></button>
+        <button id="ni-l" aria-label="Образование" class="nav-btn" onclick="switchTab('lib-view', 'ni-l')"><svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg></button>
+        <button id="ni-u" aria-label="Профиль" class="nav-btn" onclick="switchTab('prof-view', 'ni-u')"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></button>
     </nav>
 </div>
 
@@ -244,7 +274,10 @@
     }
 
     function handleGlobalSearch(val) {
-        const query = val.toLowerCase();
+        const query = val.trim().toLowerCase();
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.style.display = card.textContent.toLowerCase().includes(query) ? '' : 'none';
+        });
         document.querySelectorAll('.book-card').forEach((card, i) => {
             card.style.display = books[i].t.toLowerCase().includes(query) ? 'block' : 'none';
         });
@@ -263,6 +296,11 @@
         `).join('');
     }
 
+    function openHeroBook() {
+        const b = books[(slide - 1 + books.length) % books.length];
+        openBook(b.t, `Инфо о книге ${b.t}`);
+    }
+
     let slide = 0;
     function rotateHero() {
         const b = books[slide % books.length];
@@ -275,6 +313,9 @@
         }
     }
 
+    if (location.hash === '#projects') {
+        switchTab('home-view', 'ni-h');
+    }
     renderBooks();
     rotateHero();
     setInterval(rotateHero, 5000);
